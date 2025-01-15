@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -36,6 +37,9 @@ public class CheckoutPage extends AbstractPage {
 
     @FindBy(xpath = "//button[@class='confirm btn btn-lg btn-primary']")
     private ExtendedWebElement confirmButton;
+
+    @FindBy(xpath = "//nav")
+    private NavigationBar navigationBar;
 
     public CheckoutPage(WebDriver driver) {
         super(driver);

@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -10,9 +11,6 @@ import org.openqa.selenium.support.FindBy;
 
 @Getter
 public class LoginPage extends AbstractPage {
-
-    @FindBy(xpath = "//a[@id='login2']")
-    private ExtendedWebElement loginButton;
 
     @FindBy(xpath = "//input[@id='loginusername']")
     private ExtendedWebElement usernameField;
@@ -26,12 +24,11 @@ public class LoginPage extends AbstractPage {
     @FindBy(xpath = "//button[@onclick='logIn()']")
     private ExtendedWebElement submitButton;
 
+    @FindBy(xpath = "//nav")
+    private NavigationBar navigationBar;
+
     public LoginPage(WebDriver driver) {
         super(driver);
-    }
-
-    public void openLoginModal() {
-        loginButton.click();
     }
 
     public void login(String username, String password) {

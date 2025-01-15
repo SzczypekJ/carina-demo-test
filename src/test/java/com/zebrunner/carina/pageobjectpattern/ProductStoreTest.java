@@ -2,6 +2,7 @@ package com.zebrunner.carina.pageobjectpattern;
 
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.*;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -38,10 +39,11 @@ public class ProductStoreTest implements IAbstractTest {
         Assert.assertFalse(informations.isEmpty(), "Product information should not be empty!");
 
         String productName  = informations.get(0);
+        System.out.println("productName to:" + productName);
         String price = informations.get(1);
 
         ProductPage productPage = new ProductPage(driver);
-        productPage.goToCart();
+        productPage.getNavigationBar().goToCart();
 
         CartPage cartPage = new CartPage(driver);
 
@@ -75,11 +77,11 @@ public class ProductStoreTest implements IAbstractTest {
 
         AllProductsPage allProductsPage = new AllProductsPage(driver);
 
-        List<ExtendedWebElement> productList = new WebDriverWait(driver, Duration.ofSeconds(10))
+        List<ProductComponent> productList = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                   List<ExtendedWebElement> products = allProductsPage.getProductList();
+                   List<ProductComponent> products = allProductsPage.getProductList();
 
                    System.out.println("The size of list of products: " + (products == null ? "null" : products.size()));
 
@@ -97,9 +99,11 @@ public class ProductStoreTest implements IAbstractTest {
 
         if (productList == null || productList.isEmpty()) {
             throw new RuntimeException("Product list is empty even after waiting!");
-        }
+        } // Use assert instead
 
         int size = productList.size();
+
+        // change to logger
         System.out.println("Final size of product list: " + size);
 
         int index = 3;
@@ -109,11 +113,11 @@ public class ProductStoreTest implements IAbstractTest {
 
             String price = informations.get(1);
             ProductPage productPage = new ProductPage(driver);
-            productPage.goToCart();
+            productPage.getNavigationBar().goToCart();
 
             PurchaseProduct(driver, price);
         } else {
-            throw new IndexOutOfBoundsException("Index is out of bounds: " + index + " for list of size: " + size + "!");
+            throw new IndexOutOfBoundsException("Index is out of bounds: " + index + " for list of size: " + size + "!"); //Change to assertion
         }
     }
 
@@ -129,7 +133,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                    List<ExtendedWebElement> productList = allProductsPage.getProductList();
+                    List<ProductComponent> productList = allProductsPage.getProductList();
 
                     System.out.println("The size of list of product: " + (productList == null ? "null" : productList.size()));
 
@@ -168,7 +172,7 @@ public class ProductStoreTest implements IAbstractTest {
             throw new IllegalStateException("Not all products were added to the cart!");
         }
 
-        allProductsPage.goToCart();
+        allProductsPage.getNavigationBar().goToCart();
 
         CartPage cartPage = new CartPage(driver);
 
@@ -246,7 +250,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                    List<ExtendedWebElement> productList = allProductsPage.getProductList();
+                    List<ProductComponent> productList = allProductsPage.getProductList();
 
                     System.out.println("The size of list of product: " + (productList == null ? "null" : productList.size()));
 
@@ -280,7 +284,7 @@ public class ProductStoreTest implements IAbstractTest {
             throw new IllegalStateException("Not all products were added to the cart!");
         }
 
-        allProductsPage.goToCart();
+        allProductsPage.getNavigationBar().goToCart();
 
         CartPage cartPage = new CartPage(driver);
 
@@ -346,40 +350,45 @@ public class ProductStoreTest implements IAbstractTest {
         PurchaseProduct(driver, totalPrice);
     }
 
-//    @Test
-//    public void createNewUser() {
-//        WebDriver driver = getDriver();
-//
-//        LoginPage loginPage = new LoginPage(driver);
-//        loginPage.open();
-//
-//
-//        String newUserName = RandomStringUtils.random(15, true, true);
-//        String newPassword = RandomStringUtils.random(15, true, true);
-//
-//        AllProductsPage allProductsPage = new AllProductsPage(driver);
-//        allProductsPage.goToSignIn();
-//
-//        allProductsPage.SignIn(newUserName, newPassword);
-//
-//        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .pollingEvery(Duration.ofMillis(500))
-//                .withMessage("The alert was not found in 10 seconds!")
-//                .until(ExpectedConditions.alertIsPresent());
-//
-//
-//        driver.switchTo().alert().accept();
-//
-//        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .pollingEvery(Duration.ofMillis(500))
-//                .withMessage("The login button was not found in 10 seconds!")
-//                .until(ExpectedConditions.visibilityOf(loginPage.getLoginButton()));
-//
-//        loginPage.login(newUserName, newPassword);
-//
-//        assertLogin(driver, newUserName);
-//
-//    }
+    @Test
+    public void createNewUser() {
+        WebDriver driver = getDriver();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.open();
+
+
+        String newUserName = RandomStringUtils.random(15, true, true);
+        String newPassword = RandomStringUtils.random(15, true, true);
+
+        AllProductsPage allProductsPage = new AllProductsPage(driver);
+        allProductsPage.getNavigationBar().goToSignIn();
+
+        allProductsPage.SignIn(newUserName, newPassword);
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("The alert was not found in 10 seconds!")
+                .until(ExpectedConditions.alertIsPresent());
+
+
+        driver.switchTo().alert().accept();
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("The login button was not found in 10 seconds!")
+                .until(ExpectedConditions.visibilityOf(loginPage.getNavigationBar().getLoginButton().getElement()));
+
+        loginPage.getNavigationBar().goToLogin();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.withMessage("The element Username field was not found in 10 seconds!")
+                .until(ExpectedConditions.visibilityOf(loginPage.getUsernameField()));
+
+        loginPage.login(newUserName, newPassword);
+
+        assertLogin(driver, newUserName);
+    }
 
 
     public void PurchaseProduct(WebDriver driver, String totalPrice) {
@@ -441,7 +450,7 @@ public class ProductStoreTest implements IAbstractTest {
     public void login(WebDriver driver, String username, String password) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.open();
-        loginPage.openLoginModal();
+        loginPage.getNavigationBar().goToLogin();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.withMessage("The element Username field was not found in 10 seconds!")
@@ -470,7 +479,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .withMessage("The element at index " + index + " was not found or not visible in 20 seconds!")
                 .until(driver1 -> {
                     // Refresh the list of elements from DOM
-                    List<ExtendedWebElement> productList = allProductsPage.getProductList();
+                    List<ProductComponent> productList = allProductsPage.getProductList();
 
                     // Check the size of product List
                     System.out.println("Size of product list: " + (productList == null ? "null" : productList.size()));
@@ -498,7 +507,7 @@ public class ProductStoreTest implements IAbstractTest {
                 });
 
         ProductPage productPage = new ProductPage(driver);
-        String productName = allProductsPage.getProductList().get(index).getText();
+        String productName = allProductsPage.getProductList().get(index).getText().split("\n")[0];
         allProductsPage.selectProductByIndex(index);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -517,7 +526,7 @@ public class ProductStoreTest implements IAbstractTest {
 
         driver.switchTo().alert().accept();
 
-        allProductsPage.goToHome();
+        allProductsPage.getNavigationBar().goToHome();
 
         List<String> informations = new ArrayList<>();
         informations.add(productName);
@@ -539,16 +548,17 @@ public class ProductStoreTest implements IAbstractTest {
                 .withMessage("The element Product price in the cart was not found in 10 seconds!")
                 .until(ExpectedConditions.visibilityOf(cartPage.getProductPriceInTheCartElement()));
 
-        Assert.assertEquals(cartPage.getProductNamesInCart().get(0), productName,
+        System.out.println("Nazwa produktu to: " +  cartPage.getProductNamesInCart().getFirst());
+        Assert.assertEquals(cartPage.getProductNamesInCart().getFirst(), productName,
                 "Product name in the cart does not match the selected product!");
-        Assert.assertTrue(price.contains(cartPage.getProductPricesInCart().get(0)),
+        Assert.assertTrue(price.contains(cartPage.getProductPricesInCart().getFirst()),
                 "Product price in the cart does not match the selected product!");
     }
 
     public void deleteProductsInTheCartAndCheckIt(WebDriver driver) {
         CartPage cartPage = new CartPage(driver);
         cartPage.deleteAllItems();
-        Assert.assertTrue(cartPage.getDeleteButtons().isEmpty(),
+        Assert.assertTrue(cartPage.getCartItems().isEmpty(),
                 "Cart is not empty after removing all items");
     }
 }

@@ -1,5 +1,7 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import lombok.Getter;
@@ -15,20 +17,8 @@ import java.util.List;
 @Getter
 public class AllProductsPage extends AbstractPage {
 
-    @FindBy(xpath = "//a[@class='hrefch']")
-    private List<ExtendedWebElement> productList;
-
-    @FindBy(css = "#navbarExample > ul > li.nav-item.active > a")
-    private ExtendedWebElement Home;
-
-    @FindBy(xpath = "//a[@id='cartur']")
-    private ExtendedWebElement cartButton;
-
-    @FindBy(xpath = "//a[@id='logout2']")
-    private ExtendedWebElement logoutButton;
-
-    @FindBy(xpath = "//a[@id='signin2']")
-    private ExtendedWebElement signInButton;
+    @FindBy(xpath = "//div[@class='card h-100']")
+    private List<ProductComponent> productList;
 
     @FindBy(css = "#sign-username")
     private ExtendedWebElement signInUsername;
@@ -39,55 +29,38 @@ public class AllProductsPage extends AbstractPage {
     @FindBy(xpath = "//button[@onclick='register()']")
     private ExtendedWebElement registerButton;
 
+    @FindBy(xpath = "//nav")
+    private NavigationBar navigationBar;
+
     public AllProductsPage(WebDriver driver) {
         super(driver);
     }
 
     public void selectProductByIndex(int index) {
-//        pause(2);
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        WebElement product = new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("Product is not visible in the list!")
-                .until(ExpectedConditions.visibilityOf(productList.get(index)));
-//        // Re-fetch the product list to avoid stale references
-//        List<WebElement> updatedProductList = wait.until(
-//                ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[@class='hrefch']")));
-//
-//        if (index >= updatedProductList.size()) {
-//            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
-//        }
-//
-//        WebElement product = wait.withMessage("Product is not visible in the list!")
-//                .until(ExpectedConditions.elementToBeClickable(updatedProductList.get(index)));
+                .until(ExpectedConditions.visibilityOf(productList.get(index).getRootExtendedElement().getElement()));
 
-        product.click();
+        productList.get(index).clickOnProductLink();
     }
 
     public List<String> getProductNames() {
-//        pause(2);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("Product is not visible in the list!")
                 .until(ExpectedConditions.visibilityOf(productList.getFirst()));
 
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("Product is not visible in the list!")
+                .until(ExpectedConditions.visibilityOf(productList.getFirst().getRootExtendedElement().getElement()));
+
+
         return productList.stream()
-                .map(WebElement::getText)
+                .map(ProductComponent::getProductName)
                 .toList();
-    }
-
-    public void goToHome() {
-        Home.click();
-    }
-
-
-    public void goToCart() {
-        cartButton.click();
-    }
-
-    public void goToSignIn() {
-        signInButton.click();
     }
 
     public void SignIn(String username, String password) {
@@ -95,5 +68,4 @@ public class AllProductsPage extends AbstractPage {
         signInPassword.type(password);
         registerButton.click();
     }
-
 }
