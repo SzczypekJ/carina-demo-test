@@ -27,6 +27,18 @@ public class AllProductsPage extends AbstractPage {
     @FindBy(xpath = "//a[@id='logout2']")
     private ExtendedWebElement logoutButton;
 
+    @FindBy(xpath = "//a[@id='signin2']")
+    private ExtendedWebElement signInButton;
+
+    @FindBy(css = "#sign-username")
+    private ExtendedWebElement signInUsername;
+
+    @FindBy(css = "#sign-password")
+    private ExtendedWebElement signInPassword;
+
+    @FindBy(xpath = "//button[@onclick='register()']")
+    private ExtendedWebElement registerButton;
+
     public AllProductsPage(WebDriver driver) {
         super(driver);
     }
@@ -73,4 +85,15 @@ public class AllProductsPage extends AbstractPage {
     public void goToCart() {
         cartButton.click();
     }
+
+    public void goToSignIn() {
+        signInButton.click();
+    }
+
+    public void SignIn(String username, String password) {
+        signInUsername.type(username);
+        signInPassword.type(password);
+        registerButton.click();
+    }
+
 }

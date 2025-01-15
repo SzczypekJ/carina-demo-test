@@ -4,6 +4,7 @@ import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.*;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -232,6 +233,153 @@ public class ProductStoreTest implements IAbstractTest {
 
         PurchaseProduct(driver, totalPrice);
     }
+
+    @Test
+    public void testPurchaseAllProductsFromTheWebsite() {
+        WebDriver driver = getDriver();
+
+        login(driver, "jakubszczypek5", "1234");
+
+        AllProductsPage allProductsPage = new AllProductsPage(driver);
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("No products found on the page!")
+                .until(driver1 -> {
+                    List<ExtendedWebElement> productList = allProductsPage.getProductList();
+
+                    System.out.println("The size of list of product: " + (productList == null ? "null" : productList.size()));
+
+                    if (productList == null || productList.isEmpty()) {
+                        System.out.println("Wait for loading a list of product");
+                        return null;
+                    }
+
+                    boolean allDisplayed = productList.stream()
+                            .allMatch(element -> element.getElement().isDisplayed());
+
+                    System.out.println("If all of the product are displayed: " + allDisplayed);
+                    return allDisplayed ? productList : null;
+                });
+
+
+        List<String> allNamesOfProducts  = allProductsPage.getProductNames();
+
+        int size = allNamesOfProducts.size();
+        List<String> selectedProductNames = new ArrayList<>();
+        List<String> pricesOfProducts = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            List<String> informations = addProductToCartByIndex(driver, i);
+
+            selectedProductNames.add(allNamesOfProducts.get(i));
+            pricesOfProducts.add(informations.get(1));
+        }
+
+        if (pricesOfProducts.size() < size) {
+            throw new IllegalStateException("Not all products were added to the cart!");
+        }
+
+        allProductsPage.goToCart();
+
+        CartPage cartPage = new CartPage(driver);
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("The elements Product names in the cart were not found in 10 seconds!")
+                .until(driver1 -> {
+                    List<ExtendedWebElement> productNames = cartPage.getProductNamesInCartElement();
+
+                    if (productNames == null || productNames.isEmpty()) {
+                        System.out.println("Waiting for product names to be loaded...");
+                        return null;
+                    }
+
+                    boolean allDisplayed = productNames.stream()
+                            .allMatch(element -> element.getElement().isDisplayed());
+                    System.out.println("Are all product names visible: " + allDisplayed);
+                    return allDisplayed ? productNames : null;
+                });
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("The elements Product prices in the cart were not found in 10 seconds!")
+                .until(driver1 -> {
+                    List<ExtendedWebElement> productPrices = cartPage.getProductPricesInCartElement();
+
+                    if (productPrices == null || productPrices.isEmpty()) {
+                        System.out.println("Waiting for product prices to be loaded...");
+                        return null;
+                    }
+
+                    boolean allDisplayed = productPrices.stream()
+                            .allMatch(element -> element.getElement().isDisplayed());
+                    System.out.println("Are all product prices visible: " + allDisplayed);
+                    return allDisplayed ? productPrices : null;
+                });
+
+
+
+        List<String> cartProductNames = cartPage.getProductNamesInCart();
+        List<String> cartProductPrices = cartPage.getProductPricesInCart();
+
+        // Sort lists using stream
+        selectedProductNames = selectedProductNames.stream().sorted().toList();
+        cartProductNames = cartProductNames.stream().sorted().toList();
+        pricesOfProducts = pricesOfProducts.stream().sorted().toList();
+        cartProductPrices = cartProductPrices.stream().sorted().toList();
+
+        Assert.assertEquals(cartProductNames, selectedProductNames,
+                "Product names in the cart do not match the selected products!");
+        Assert.assertEquals(cartProductPrices, pricesOfProducts,
+                "Product prices in the cart do not match the selected products!");
+
+        String totalPrice = cartPage.getTotalPrice();
+        int actualTotalPrice = Integer.parseInt(totalPrice);
+
+        int expectedTotalPrice = cartProductPrices.stream()
+                .mapToInt(Integer::parseInt)
+                .sum();
+
+        Assert.assertEquals(actualTotalPrice, expectedTotalPrice, "Total price mismatch!");
+
+        PurchaseProduct(driver, totalPrice);
+    }
+
+//    @Test
+//    public void createNewUser() {
+//        WebDriver driver = getDriver();
+//
+//        LoginPage loginPage = new LoginPage(driver);
+//        loginPage.open();
+//
+//
+//        String newUserName = RandomStringUtils.random(15, true, true);
+//        String newPassword = RandomStringUtils.random(15, true, true);
+//
+//        AllProductsPage allProductsPage = new AllProductsPage(driver);
+//        allProductsPage.goToSignIn();
+//
+//        allProductsPage.SignIn(newUserName, newPassword);
+//
+//        new WebDriverWait(driver, Duration.ofSeconds(10))
+//                .pollingEvery(Duration.ofMillis(500))
+//                .withMessage("The alert was not found in 10 seconds!")
+//                .until(ExpectedConditions.alertIsPresent());
+//
+//
+//        driver.switchTo().alert().accept();
+//
+//        new WebDriverWait(driver, Duration.ofSeconds(10))
+//                .pollingEvery(Duration.ofMillis(500))
+//                .withMessage("The login button was not found in 10 seconds!")
+//                .until(ExpectedConditions.visibilityOf(loginPage.getLoginButton()));
+//
+//        loginPage.login(newUserName, newPassword);
+//
+//        assertLogin(driver, newUserName);
+//
+//    }
 
 
     public void PurchaseProduct(WebDriver driver, String totalPrice) {

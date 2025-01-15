@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="ProductStoreTestSuite" verbose="1" parallel="methods" thread-count="4">
+<suite name="ProductStoreTestSuite" verbose="1" parallel="methods" thread-count="6">
     <test name="ProductStoreTests">
         <classes>
             <class name="com.zebrunner.carina.pageobjectpattern.ProductStoreTest"/>
