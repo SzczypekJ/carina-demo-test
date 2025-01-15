@@ -290,7 +290,7 @@ public class ProductStoreTest implements IAbstractTest {
         System.out.println("Test passed: Purchase details are correct!");
     }
 
-    public static void login(WebDriver driver, String username, String password) {
+    public void login(WebDriver driver, String username, String password) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.open();
         loginPage.openLoginModal();
@@ -302,7 +302,7 @@ public class ProductStoreTest implements IAbstractTest {
         loginPage.login(username, password);
     }
 
-    public static void assertLogin(WebDriver driver, String username) {
+    public void assertLogin(WebDriver driver, String username) {
         LoginPage loginPage = new LoginPage(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -314,7 +314,7 @@ public class ProductStoreTest implements IAbstractTest {
                 "Login failed or welcome message is incorrect!");
     }
 
-    public static List<String> addProductToCartByIndex(WebDriver driver, int index)  {
+    public List<String> addProductToCartByIndex(WebDriver driver, int index)  {
         AllProductsPage allProductsPage = new AllProductsPage(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(20)) // Zwiększony timeout
@@ -378,7 +378,7 @@ public class ProductStoreTest implements IAbstractTest {
         return informations;
     }
 
-    public static void assertsInCart(WebDriver driver, String productName, String price) {
+    public void assertsInCart(WebDriver driver, String productName, String price) {
         CartPage cartPage = new CartPage(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -397,7 +397,7 @@ public class ProductStoreTest implements IAbstractTest {
                 "Product price in the cart does not match the selected product!");
     }
 
-    public static void deleteProductsInTheCartAndCheckIt(WebDriver driver) {
+    public void deleteProductsInTheCartAndCheckIt(WebDriver driver) {
         CartPage cartPage = new CartPage(driver);
         cartPage.deleteAllItems();
         Assert.assertTrue(cartPage.getDeleteButtons().isEmpty(),
