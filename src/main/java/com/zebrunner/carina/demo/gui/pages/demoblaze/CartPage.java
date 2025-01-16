@@ -1,6 +1,7 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.CartItemComponent;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
@@ -32,6 +34,9 @@ public class CartPage extends AbstractPage {
 
     @FindBy(xpath = "//nav")
     private NavigationBar navigationBar;
+
+    @FindBy(id = "footc")
+    private Footer footer;
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -75,7 +80,7 @@ public class CartPage extends AbstractPage {
     public WebElement getProductNameInTheCartElement() {
         waitForProductNamesInCart();
         if (cartItems.isEmpty()) {
-            throw new IllegalStateException("No product names found in the cart!");
+            Assert.fail("No product names found in the cart!");
         }
         return cartItems.get(0).getProductNameElement().getElement();
     }
@@ -83,7 +88,7 @@ public class CartPage extends AbstractPage {
     public WebElement getProductPriceInTheCartElement() {
         waitForProductPricesInCart();
         if (cartItems.isEmpty()) {
-            throw new IllegalStateException("No product prices found in the cart!");
+            Assert.fail("No product prices found in the cart!");
         }
         return cartItems.get(0).getProductPriceElement().getElement();
     }
@@ -103,7 +108,7 @@ public class CartPage extends AbstractPage {
 
         boolean isEmpty = cartTable.findExtendedWebElements(By.xpath("./tr")).isEmpty();
         if (!isEmpty) {
-            throw new AssertionError("Cart is not empty after deleting items!");
+            Assert.fail("Cart is not empty after deleting items!");
         }
     }
 

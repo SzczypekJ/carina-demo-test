@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import com.zebrunner.carina.utils.R;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -23,15 +24,17 @@ public class ProductStoreTest implements IAbstractTest {
     @Test
     public void testLogin() {
         WebDriver driver = getDriver();
-        login(driver, "jakubszczypek", "1234");
-        assertLogin(driver, "jakubszczypek");
+        String username = R.CONFIG.get("username1");
+        login(driver, username, R.CONFIG.get("passwordGlobal"));
+        assertLogin(driver, username);
     }
 
     @Test
     public void testAddProductToCart() {
         WebDriver driver = getDriver();
         // Log in - the helpful method to log in - the reuse of code
-        login(driver, "jakubszczypek2", "1234");
+        String username = R.CONFIG.get("username2");
+        login(driver, username, R.CONFIG.get("passwordGlobal"));
 
         // Adds product to the cart - helpful method which reduce amount of code
         List<String> informations = addProductToCartByIndex(driver, 0);
@@ -73,7 +76,8 @@ public class ProductStoreTest implements IAbstractTest {
     @Test
     public void testAddSingleProductPurchase() {
         WebDriver driver = getDriver();
-        login(driver, "jakubszczypek3", "1234");
+        String username = R.CONFIG.get("username3");
+        login(driver, username, R.CONFIG.get("passwordGlobal"));
 
         AllProductsPage allProductsPage = new AllProductsPage(driver);
 
@@ -98,7 +102,7 @@ public class ProductStoreTest implements IAbstractTest {
                 });
 
         if (productList == null || productList.isEmpty()) {
-            throw new RuntimeException("Product list is empty even after waiting!");
+            Assert.fail("Product list is empty even after waiting!");
         } // Use assert instead
 
         int size = productList.size();
@@ -117,7 +121,7 @@ public class ProductStoreTest implements IAbstractTest {
 
             PurchaseProduct(driver, price);
         } else {
-            throw new IndexOutOfBoundsException("Index is out of bounds: " + index + " for list of size: " + size + "!"); //Change to assertion
+            Assert.fail("Index is out of bounds: " + index + " for list of size: " + size + "!");
         }
     }
 
@@ -126,7 +130,8 @@ public class ProductStoreTest implements IAbstractTest {
     public void testPurchaseProductWithList() throws InterruptedException {
         WebDriver driver = getDriver();
 
-        login(driver, "jakubszczypek4", "1234");
+        String username = R.CONFIG.get("username4");
+        login(driver, username, R.CONFIG.get("passwordGlobal"));
         AllProductsPage allProductsPage = new AllProductsPage(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -169,7 +174,7 @@ public class ProductStoreTest implements IAbstractTest {
         }
 
         if (pricesOfProducts.size() < indexes.size()) {
-            throw new IllegalStateException("Not all products were added to the cart!");
+            Assert.fail("Not all products were added to the cart!");
         }
 
         allProductsPage.getNavigationBar().goToCart();
@@ -242,7 +247,8 @@ public class ProductStoreTest implements IAbstractTest {
     public void testPurchaseAllProductsFromTheWebsite() {
         WebDriver driver = getDriver();
 
-        login(driver, "jakubszczypek5", "1234");
+        String username = R.CONFIG.get("username5");
+        login(driver, username, R.CONFIG.get("passwordGlobal"));
 
         AllProductsPage allProductsPage = new AllProductsPage(driver);
 
@@ -281,7 +287,7 @@ public class ProductStoreTest implements IAbstractTest {
         }
 
         if (pricesOfProducts.size() < size) {
-            throw new IllegalStateException("Not all products were added to the cart!");
+            Assert.fail("Not all products were added to the cart!");
         }
 
         allProductsPage.getNavigationBar().goToCart();
@@ -321,8 +327,6 @@ public class ProductStoreTest implements IAbstractTest {
                     System.out.println("Are all product prices visible: " + allDisplayed);
                     return allDisplayed ? productPrices : null;
                 });
-
-
 
         List<String> cartProductNames = cartPage.getProductNamesInCart();
         List<String> cartProductPrices = cartPage.getProductPricesInCart();
@@ -388,6 +392,27 @@ public class ProductStoreTest implements IAbstractTest {
         loginPage.login(newUserName, newPassword);
 
         assertLogin(driver, newUserName);
+    }
+
+    @Test
+    public void testFooterAndNavigationBarVisibility() {
+        WebDriver driver = getDriver();
+
+        AllProductsPage allProductsPage = new AllProductsPage(driver);
+        allProductsPage.open();
+        Assert.assertTrue(allProductsPage.getFooter().isUIObjectPresent(), "Footer is not visible on AllProductsPage!");
+        Assert.assertTrue(allProductsPage.getNavigationBar().isUIObjectPresent(), "Navigation is not visible on AllProductsPage!");
+        allProductsPage.getNavigationBar().goToCart();
+
+        CartPage cartPage = new CartPage(driver);
+        Assert.assertTrue(cartPage.getFooter().isUIObjectPresent(), "Footer is not visible on CartPage!");
+        Assert.assertTrue(cartPage.getNavigationBar().isUIObjectPresent(), "Navigation bar is not visible on AllProductsPage!");
+        cartPage.getNavigationBar().goToHome();
+
+        allProductsPage.selectProductByIndex(0);
+        ProductPage productPage = new ProductPage(driver);
+        Assert.assertTrue(productPage.getFooter().isUIObjectPresent(), "Footer is not visible on ProductPage!");
+        Assert.assertTrue(productPage.getNavigationBar().isUIObjectPresent(), "Navigation bar is not visible on AllProductsPage!");
     }
 
 
@@ -493,7 +518,7 @@ public class ProductStoreTest implements IAbstractTest {
                     // Check if the index is in the bounds
                     if (index >= productList.size()) {
                         System.out.println("Index " + index + " out of bounds for product list size " + productList.size());
-                        throw new IndexOutOfBoundsException(
+                        Assert.fail(
                                 "Index " + index + " out of bounds for product list size " + productList.size());
                     }
 

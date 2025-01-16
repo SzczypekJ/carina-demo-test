@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -27,6 +28,9 @@ public class LoginPage extends AbstractPage {
     @FindBy(xpath = "//nav")
     private NavigationBar navigationBar;
 
+    @FindBy(id = "footc")
+    private Footer footer;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -45,7 +49,7 @@ public class LoginPage extends AbstractPage {
         return welcomeText;
     }
 
-    public void open() {
-        driver.get(R.CONFIG.get("url"));
-    }
+//    public void open() {
+//        driver.get(R.CONFIG.get("url"));
+//    }
 }
