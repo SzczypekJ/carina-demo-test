@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 @Getter
 public class CartItemComponent extends AbstractUIObject {
@@ -39,6 +40,7 @@ public class CartItemComponent extends AbstractUIObject {
     }
 
     public void clickDeleteButton() {
+        Assert.assertTrue(deleteButton.isVisible(), "Delete button is not visible");
         deleteButton.click();
     }
 

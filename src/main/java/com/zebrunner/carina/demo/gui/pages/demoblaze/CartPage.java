@@ -1,8 +1,11 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.common.AllProductsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.CartPageBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.CartItemComponent;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import lombok.Getter;
@@ -12,92 +15,96 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
 
-@Getter
-public class CartPage extends AbstractPage {
+@DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = CartPageBase.class)
+public class CartPage extends CartPageBase {
 
-    @FindBy(css = "#tbodyid > tr")
-    private List<CartItemComponent> cartItems;
-
-    @FindBy(xpath = "//button[@data-target='#orderModal']")
-    private ExtendedWebElement placeOrderButton;
-
-    @FindBy(css = "#totalp")
-    private ExtendedWebElement totalPrice;
-
-    @FindBy(id = "tbodyid")
-    private ExtendedWebElement cartTable;
-
-    @FindBy(xpath = "//nav")
-    private NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    private Footer footer;
+    public static final Logger logger = LoggerFactory.getLogger(CartPage.class);
 
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
+    public NavigationBar getNavigationBar() {
+        return navigationBar;
+    }
 
+    @Override
+    public Footer getFooter() {
+        return footer;
+    }
+
+    @Override
     public List<String> getProductNamesInCart() {
         waitForProductNamesInCart();
+        Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product names found!");
         return cartItems.stream()
                 .map(CartItemComponent::getProductName)
                 .toList();
     }
 
+    @Override
     public List<ExtendedWebElement> getProductNamesInCartElement() {
         waitForProductNamesInCart();
+        // Don't work with to assert
+        Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product name elements found!");
         return cartItems.stream()
                 .map(CartItemComponent::getProductNameElement)
                 .toList();
     }
 
+    @Override
     public List<String> getProductPricesInCart() {
         waitForProductPricesInCart();
-
+        Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product prices found!");
         return cartItems.stream()
                 .map(CartItemComponent::getProductPrice)
                 .map(rawPrice -> rawPrice.replaceAll("[^0-9]", ""))
                 .toList();
     }
 
+    @Override
     public List<ExtendedWebElement> getProductPricesInCartElement() {
         waitForProductPricesInCart();
+        Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product prices found!");
         return cartItems.stream()
                 .map(CartItemComponent::getProductPriceElement)
                 .toList();
     }
 
+    @Override
     public void placeOrder() {
         placeOrderButton.click();
     }
 
+    @Override
     public WebElement getProductNameInTheCartElement() {
         waitForProductNamesInCart();
-        if (cartItems.isEmpty()) {
-            Assert.fail("No product names found in the cart!");
-        }
-        return cartItems.get(0).getProductNameElement().getElement();
+        Assert.assertFalse(cartItems.isEmpty(), "No product names found in the cart!");
+        return cartItems.getFirst().getProductNameElement().getElement();
     }
 
+    @Override
     public WebElement getProductPriceInTheCartElement() {
         waitForProductPricesInCart();
-        if (cartItems.isEmpty()) {
-            Assert.fail("No product prices found in the cart!");
-        }
-        return cartItems.get(0).getProductPriceElement().getElement();
+        Assert.assertFalse(cartItems.isEmpty(), "No product prices found in the cart!");
+        return cartItems.getFirst().getProductPriceElement().getElement();
     }
 
+    @Override
     public String getTotalPrice() {
+        Assert.assertTrue(totalPrice.isElementPresent(), "Total price element is not present in the cart!");
         return totalPrice.getText();
     }
 
-
+    @Override
     public void deleteAllItems() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -106,19 +113,17 @@ public class CartPage extends AbstractPage {
             wait.until(ExpectedConditions.stalenessOf(item.getRootExtendedElement().getElement()));
         }
 
-        boolean isEmpty = cartTable.findExtendedWebElements(By.xpath("./tr")).isEmpty();
-        if (!isEmpty) {
-            Assert.fail("Cart is not empty after deleting items!");
-        }
+        Assert.assertTrue(cartTable.findExtendedWebElements(By.xpath("./tr")).isEmpty(),
+                "Cart is not empty after deleting items!");
     }
 
-
-    private void waitForProductNamesInCart() {
+    @Override
+    public void waitForProductNamesInCart() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.withMessage("Product names are not visible in the cart!")
                 .until(driver -> {
                     if (cartItems.isEmpty()) {
-                        System.out.println("Cart items list is empty!");
+                        logger.info("Cart items list is empty!");
                         return false;
                     }
 
@@ -127,20 +132,26 @@ public class CartPage extends AbstractPage {
                             .allMatch(WebElement::isDisplayed);
 
                     if (!allVisible) {
-                        System.out.println("Not all product names are visible yet!");
+                        logger.info("Not all product names are visible yet!");
                     }
-
-                    System.out.println(allVisible);
+                    
+                    logger.info(String.valueOf(allVisible));
                     return allVisible;
                 });
     }
 
-    private void waitForProductPricesInCart() {
+    @Override
+    public void waitForProductPricesInCart() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.withMessage("Product prices are not visible in the cart!")
                 .until(ExpectedConditions.visibilityOfAllElements(
                         cartItems.stream()
                                 .map(item -> item.getProductPriceElement().getElement())
                                 .toList()));
+    }
+
+    @Override
+    public List<CartItemComponent> getCartItems() {
+        return cartItems;
     }
 }

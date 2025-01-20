@@ -1,5 +1,6 @@
 *.class
 drivers/
+/apk
 
 # Package Files #
 *.jar

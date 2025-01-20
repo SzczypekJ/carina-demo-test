@@ -1,16 +1,20 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.common.CartPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.CheckoutPageBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.demo.utils.Person;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+@DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = CheckoutPageBase.class)
 @Getter
-public class CheckoutPage extends AbstractPage {
+public class CheckoutPage extends CheckoutPageBase {
 
     @FindBy(xpath = "//input[@id='name']")
     private ExtendedWebElement nameField;
@@ -49,6 +53,7 @@ public class CheckoutPage extends AbstractPage {
         super(driver);
     }
 
+    @Override
     public void fillCheckoutDetails(Person person) {
         nameField.type(person.getName());
         countryField.type(person.getCountry());
@@ -58,19 +63,33 @@ public class CheckoutPage extends AbstractPage {
         yearField.type(person.getYear());
     }
 
+    @Override
     public void completePurchase() {
         purchaseButton.click();
     }
 
+    @Override
     public String getPurchaseDetails() {
         return purchaseDetails.getText();
     }
 
+    @Override
     public ExtendedWebElement getPurchaseDetailsElement() {
         return purchaseDetails;
     }
 
+    @Override
     public void confirmPurchase() {
     	confirmButton.click();
+    }
+
+    @Override
+    public NavigationBar getNavigationBar() {
+        return navigationBar;
+    }
+
+    @Override
+    public Footer getFooter() {
+        return footer;
     }
 }

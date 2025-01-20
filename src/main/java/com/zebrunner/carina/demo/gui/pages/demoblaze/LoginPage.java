@@ -1,8 +1,10 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.common.LoginPageBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import lombok.Getter;
@@ -10,46 +12,42 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@Getter
-public class LoginPage extends AbstractPage {
-
-    @FindBy(xpath = "//input[@id='loginusername']")
-    private ExtendedWebElement usernameField;
-
-    @FindBy(xpath = "//input[@id='loginpassword']")
-    private ExtendedWebElement passwordField;
-
-    @FindBy(xpath = "//a[@id='nameofuser']")
-    private ExtendedWebElement welcomeText;
-
-    @FindBy(xpath = "//button[@onclick='logIn()']")
-    private ExtendedWebElement submitButton;
-
-    @FindBy(xpath = "//nav")
-    private NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    private Footer footer;
+@DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = LoginPageBase.class)
+public class LoginPage extends LoginPageBase {
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
+    public NavigationBar getNavigationBar() {
+        return navigationBar;
+    }
+
+    @Override
+    public Footer getFooter() {
+        return footer;
+    }
+
+    @Override
     public void login(String username, String password) {
         usernameField.type(username);
         passwordField.type(password);
         submitButton.click();
     }
 
+    @Override
     public String getWelcomeText() {
         return welcomeText.getText();
     }
 
+    @Override
     public WebElement getWelcomeTextElement() {
         return welcomeText;
     }
 
-//    public void open() {
-//        driver.get(R.CONFIG.get("url"));
-//    }
+    @Override
+    public ExtendedWebElement getUsernameField() {
+        return usernameField;
+    }
 }
