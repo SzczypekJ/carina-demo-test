@@ -33,5 +33,5 @@ public abstract class ProductPageBase extends AbstractPage {
 
     public abstract NavigationBar getNavigationBar();
 
-    public abstract ExtendedWebElement getFooter();
+    public abstract Footer getFooter();
 }

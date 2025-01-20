@@ -2,7 +2,6 @@ package com.zebrunner.carina.pageobjectpattern;
 
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.gui.pages.common.*;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.*;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -20,7 +19,7 @@ import com.zebrunner.carina.utils.R;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ProductStoreTest implements IAbstractTest {
 
@@ -51,10 +50,10 @@ public class ProductStoreTest implements IAbstractTest {
         logger.info("productName to:" + productName);
         String price = informations.get(1);
 
-        ProductPage productPage = (ProductPage) initPage(driver, ProductPageBase.class);
+        ProductPageBase productPage = initPage(driver, ProductPageBase.class);
         productPage.getNavigationBar().goToCart();
 
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
 
         // Better approach if the website is dynamic
 //        new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -90,7 +89,7 @@ public class ProductStoreTest implements IAbstractTest {
         String username = R.CONFIG.get("username3");
         login(driver, username, R.CONFIG.get("passwordGlobal"));
 
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
 
         List<ProductComponent> productList = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -125,7 +124,7 @@ public class ProductStoreTest implements IAbstractTest {
             List<String> informations = addProductToCartByIndex(driver, 3);
 
             String price = informations.get(1);
-            ProductPage productPage = (ProductPage) initPage(driver, ProductPageBase.class);
+            ProductPageBase productPage = initPage(driver, ProductPageBase.class);
             productPage.getNavigationBar().goToCart();
 
             PurchaseProduct(driver, price);
@@ -141,7 +140,7 @@ public class ProductStoreTest implements IAbstractTest {
 
         String username = R.CONFIG.get("username4");
         login(driver, username, R.CONFIG.get("passwordGlobal"));
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -186,7 +185,7 @@ public class ProductStoreTest implements IAbstractTest {
 
         allProductsPage.getNavigationBar().goToCart();
 
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -261,7 +260,7 @@ public class ProductStoreTest implements IAbstractTest {
         String username = R.CONFIG.get("username5");
         login(driver, username, R.CONFIG.get("passwordGlobal"));
 
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -301,7 +300,7 @@ public class ProductStoreTest implements IAbstractTest {
 
         allProductsPage.getNavigationBar().goToCart();
 
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -369,13 +368,13 @@ public class ProductStoreTest implements IAbstractTest {
     public void createNewUser() {
         WebDriver driver = getDriver();
 
-        LoginPage loginPage = (LoginPage) initPage(driver, LoginPageBase.class);
+        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
         loginPage.open();
 
         String newUserName = RandomStringUtils.random(15, true, true);
         String newPassword = RandomStringUtils.random(15, true, true);
 
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
         allProductsPage.getNavigationBar().goToSignIn();
 
         allProductsPage.SignIn(newUserName, newPassword);
@@ -412,19 +411,19 @@ public class ProductStoreTest implements IAbstractTest {
     public void testFooterAndNavigationBarVisibility() {
         WebDriver driver = getDriver();
 
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
         allProductsPage.open();
         Assert.assertTrue(allProductsPage.getFooter().isUIObjectPresent(), "Footer is not visible on AllProductsPage!");
         Assert.assertTrue(allProductsPage.getNavigationBar().isUIObjectPresent(), "Navigation is not visible on AllProductsPage!");
         allProductsPage.getNavigationBar().goToCart();
 
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
         Assert.assertTrue(cartPage.getFooter().isUIObjectPresent(), "Footer is not visible on CartPage!");
         Assert.assertTrue(cartPage.getNavigationBar().isUIObjectPresent(), "Navigation bar is not visible on AllProductsPage!");
         cartPage.getNavigationBar().goToHome();
 
         allProductsPage.selectProductByIndex(0);
-        ProductPage productPage = (ProductPage) initPage(driver, ProductPageBase.class);
+        ProductPageBase productPage = initPage(driver, ProductPageBase.class);
         Assert.assertTrue(productPage.getFooter().isUIObjectPresent(), "Footer is not visible on ProductPage!");
         Assert.assertTrue(productPage.getNavigationBar().isUIObjectPresent(), "Navigation bar is not visible on AllProductsPage!");
     }
@@ -432,7 +431,7 @@ public class ProductStoreTest implements IAbstractTest {
 
     public void PurchaseProduct(WebDriver driver, String totalPrice) {
 
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
         cartPage.placeOrder();
 
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -453,7 +452,7 @@ public class ProductStoreTest implements IAbstractTest {
 //        wait.withMessage("The element Year field was not found in 10 seconds!")
 //                .until(ExpectedConditions.visibilityOf(checkoutPage.getYearField()));
 
-        CheckoutPage checkoutPage = (CheckoutPage) initPage(driver, CheckoutPageBase.class);
+        CheckoutPageBase checkoutPage = initPage(driver, CheckoutPageBase.class);
         Assert.assertTrue(checkoutPage.getNameField().isVisible(), "The element Name field was not found!");
         Assert.assertTrue(checkoutPage.getCountryField().isVisible(), "The element Country field was not found!");
         Assert.assertTrue(checkoutPage.getCityField().isVisible(), "The element City field was not found!");
@@ -484,7 +483,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public void assertPurchaseDetails(WebDriver driver, String totalPrice, String creditCard, String name) {
-        CheckoutPage checkoutPage = (CheckoutPage) initPage(driver, CheckoutPageBase.class);
+        CheckoutPageBase checkoutPage = initPage(driver, CheckoutPageBase.class);
 
         // Validate the purchase summary details
         String purchaseDetails = checkoutPage.getPurchaseDetails();
@@ -497,7 +496,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public void login(WebDriver driver, String username, String password) {
-        LoginPage loginPage = (LoginPage) initPage(driver, LoginPageBase.class);
+        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
         loginPage.open();
         loginPage.getNavigationBar().goToLogin();
 
@@ -512,7 +511,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public void assertLogin(WebDriver driver, String username) {
-        LoginPage loginPage = (LoginPage) initPage(driver, LoginPageBase.class);
+        LoginPageBase loginPage = initPage(driver, LoginPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
@@ -528,7 +527,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public List<String> addProductToCartByIndex(WebDriver driver, int index)  {
-        AllProductsPage allProductsPage = (AllProductsPage) initPage(driver, AllProductsPageBase.class);
+        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
 
         new WebDriverWait(driver, Duration.ofSeconds(20))
                 .pollingEvery(Duration.ofMillis(500))
@@ -570,7 +569,7 @@ public class ProductStoreTest implements IAbstractTest {
         Assert.assertTrue(productList.get(index).getElement().isDisplayed(),
                 "Element at index " + index + " is not visible after waiting.");
 
-        ProductPage productPage = (ProductPage) initPage(driver, ProductPageBase.class);
+        ProductPageBase productPage = initPage(driver, ProductPageBase.class);
         String productName = allProductsPage.getProductList().get(index).getText().split("\n")[0];
         allProductsPage.selectProductByIndex(index);
 
@@ -604,7 +603,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public void assertsInCart(WebDriver driver, String productName, String price) {
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
 
 //        new WebDriverWait(driver, Duration.ofSeconds(10))
 //                .pollingEvery(Duration.ofMillis(500))
@@ -631,7 +630,7 @@ public class ProductStoreTest implements IAbstractTest {
     }
 
     public void deleteProductsInTheCartAndCheckIt(WebDriver driver) {
-        CartPage cartPage = (CartPage) initPage(driver, CartPageBase.class);
+        CartPageBase cartPage = initPage(driver, CartPageBase.class);
         cartPage.deleteAllItems();
         Assert.assertTrue(cartPage.getCartItems().isEmpty(),
                 "Cart is not empty after removing all items");

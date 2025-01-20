@@ -5,10 +5,12 @@ import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 
+@Getter
 public abstract class CheckoutPageBase extends AbstractPage {
     @FindBy(xpath = "//input[@id='name']")
     protected ExtendedWebElement nameField;
@@ -60,4 +62,5 @@ public abstract class CheckoutPageBase extends AbstractPage {
     public abstract ExtendedWebElement getPurchaseDetailsElement();
 
     public abstract void confirmPurchase();
+
 }
