@@ -17,13 +17,13 @@ public class Footer extends AbstractUIObject {
     @FindBy(css = "#fotcont > div:nth-child(2) > div > div > h4")
     private ExtendedWebElement getInTouchTitle;
 
-    @FindBy(xpath = "//div[@id='fotcont']//div[2]//p[contains(text(), 'Address')]")
+    @FindBy(xpath = ".//div[@id='fotcont']//div[2]//p[contains(text(), 'Address')]")
     private ExtendedWebElement address;
 
-    @FindBy(xpath = "//div[@id='fotcont']//div[2]//p[contains(text(), 'Phone')]")
+    @FindBy(xpath = ".//div[@id='fotcont']//div[2]//p[contains(text(), 'Phone')]")
     private ExtendedWebElement phone;
 
-    @FindBy(xpath = "//div[@id='fotcont']//div[2]//p[contains(text(), 'Email')]")
+    @FindBy(xpath = ".//div[@id='fotcont']//div[2]//p[contains(text(), 'Email')]")
     private ExtendedWebElement email;
 
     @FindBy(css = "#fotcont > div:nth-child(3) > div > div > h4")

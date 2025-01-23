@@ -91,25 +91,27 @@ public class ProductStoreTest implements IAbstractTest {
 
         AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
 
-        List<ProductComponent> productList = new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                   List<ProductComponent> products = allProductsPage.getProductList();
+                    List<ProductComponent> products = allProductsPage.getProductList();
 
-                   logger.info("The size of list of products: " + (products == null ? "null" : products.size()));
+                    logger.info("The size of list of products: " + (products == null ? "null" : products.size()));
 
-                   if (products == null || products.isEmpty()) {
-                       logger.info("Wait for loading a list of product");
-                       return null;
-                   }
+                    if (products == null || products.isEmpty()) {
+                        logger.info("Wait for loading a list of products");
+                        return false; // Keep waiting
+                    }
 
-                   boolean allDisplayed = products.stream()
-                           .allMatch(element -> element.getElement().isDisplayed());
+                    boolean allDisplayed = products.stream()
+                            .allMatch(element -> element.getElement().isDisplayed());
 
-                    logger.info("If all of the product are displayed: " + allDisplayed);
-                    return allDisplayed ? products : null;
+                    logger.info("If all of the products are displayed: " + allDisplayed);
+                    return allDisplayed; // Return true if condition is met
                 });
+
+        List<ProductComponent> productList = allProductsPage.getProductList();
 
         boolean isProductListValid = productList != null && !productList.isEmpty();
         Assert.assertTrue(isProductListValid, "Product list is empty even after waiting!");

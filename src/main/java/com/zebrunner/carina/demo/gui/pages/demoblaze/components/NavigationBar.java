@@ -19,16 +19,16 @@ public class NavigationBar extends AbstractUIObject {
     @FindBy(css = "#navbarExample > ul > li:nth-child(3) > a")
     private ExtendedWebElement aboutUsButton;
 
-    @FindBy(xpath = "//a[@id='cartur']")
+    @FindBy(xpath = ".//a[@id='cartur']")
     private ExtendedWebElement cartButton;
 
-    @FindBy(xpath = "//a[@id='login2']")
+    @FindBy(xpath = ".//a[@id='login2']")
     private ExtendedWebElement loginButton;
 
-    @FindBy(xpath = "//a[@id='logout2']")
+    @FindBy(xpath = ".//a[@id='logout2']")
     private ExtendedWebElement logoutButton;
 
-    @FindBy(xpath = "//a[@id='signin2']")
+    @FindBy(xpath = ".//a[@id='signin2']")
     private ExtendedWebElement signInButton;
 
 
