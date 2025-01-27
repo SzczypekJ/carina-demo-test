@@ -26,12 +26,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
-import com.zebrunner.carina.demo.gui.pages.common.ModelInfoPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.NewsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.AllBrandsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.BrandModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.CompareModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.ModelInfoPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.NewsPageBase;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;

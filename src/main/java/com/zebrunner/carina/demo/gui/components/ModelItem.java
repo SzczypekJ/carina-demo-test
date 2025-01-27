@@ -15,7 +15,7 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo.gui.components;
 
-import com.zebrunner.carina.demo.gui.pages.common.ModelInfoPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.ModelInfoPageBase;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;

@@ -1,8 +1,8 @@
 package com.zebrunner.carina.pageobjectpattern;
 
 import com.zebrunner.carina.core.IAbstractTest;
-import com.zebrunner.carina.demo.gui.pages.common.*;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
+import com.zebrunner.carina.demo.gui.pages.common.demoblaze.*;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.ProductComponentDesktop;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -95,7 +95,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                    List<ProductComponent> products = allProductsPage.getProductList();
+                    List<ProductComponentDesktop> products = allProductsPage.getProductList();
 
                     logger.info("The size of list of products: " + (products == null ? "null" : products.size()));
 
@@ -111,7 +111,7 @@ public class ProductStoreTest implements IAbstractTest {
                     return allDisplayed; // Return true if condition is met
                 });
 
-        List<ProductComponent> productList = allProductsPage.getProductList();
+        List<ProductComponentDesktop> productList = allProductsPage.getProductList();
 
         boolean isProductListValid = productList != null && !productList.isEmpty();
         Assert.assertTrue(isProductListValid, "Product list is empty even after waiting!");
@@ -148,7 +148,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                    List<ProductComponent> productList = allProductsPage.getProductList();
+                    List<ProductComponentDesktop> productList = allProductsPage.getProductList();
 
                     logger.info("The size of list of product: " + (productList == null ? "null" : productList.size()));
 
@@ -268,7 +268,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .pollingEvery(Duration.ofMillis(500))
                 .withMessage("No products found on the page!")
                 .until(driver1 -> {
-                    List<ProductComponent> productList = allProductsPage.getProductList();
+                    List<ProductComponentDesktop> productList = allProductsPage.getProductList();
 
                     logger.info("The size of list of product: " + (productList == null ? "null" : productList.size()));
 
@@ -536,7 +536,7 @@ public class ProductStoreTest implements IAbstractTest {
                 .withMessage("The element at index " + index + " was not found or not visible in 20 seconds!")
                 .until(driver1 -> {
                     // Refresh the list of elements from DOM
-                    List<ProductComponent> productList = allProductsPage.getProductList();
+                    List<ProductComponentDesktop> productList = allProductsPage.getProductList();
 
                     // Check the size of product List
                     logger.info("Size of product list: " + (productList == null ? "null" : productList.size()));
@@ -564,7 +564,7 @@ public class ProductStoreTest implements IAbstractTest {
                 });
 
         // I cannot change the webdriverwait which I have above - I will get error
-        List<ProductComponent> productList = allProductsPage.getProductList();
+        List<ProductComponentDesktop> productList = allProductsPage.getProductList();
         Assert.assertNotNull(productList, "Product list is null after waiting.");
         Assert.assertFalse(productList.isEmpty(), "Product list is empty after waiting.");
         Assert.assertTrue(index < productList.size(), "Index " + index + " is out of bounds for product list size " + productList.size());

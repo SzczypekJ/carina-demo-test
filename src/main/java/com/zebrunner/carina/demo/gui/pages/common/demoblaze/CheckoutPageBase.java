@@ -1,7 +1,7 @@
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
 import com.zebrunner.carina.demo.utils.Person;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -39,19 +39,13 @@ public abstract class CheckoutPageBase extends AbstractPage {
     @FindBy(xpath = "//button[@class='confirm btn btn-lg btn-primary']")
     protected ExtendedWebElement confirmButton;
 
-    @FindBy(xpath = "//nav")
-    protected NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    protected Footer footer;
-
     public CheckoutPageBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract NavigationBar getNavigationBar();
+    public abstract NavigationBarBase getNavigationBar();
 
-    public abstract Footer getFooter();
+    public abstract FooterBase getFooter();
 
     public abstract void fillCheckoutDetails(Person person);
 

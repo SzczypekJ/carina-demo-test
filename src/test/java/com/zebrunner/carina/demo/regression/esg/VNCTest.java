@@ -1,7 +1,7 @@
 package com.zebrunner.carina.demo.regression.esg;
 
 import com.zebrunner.carina.core.IAbstractTest;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
 import com.zebrunner.carina.demo.websocket.WebsocketClientEndpoint;
 import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.WebDriver;

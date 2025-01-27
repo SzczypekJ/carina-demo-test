@@ -15,8 +15,8 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo;
 
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.CompareModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 

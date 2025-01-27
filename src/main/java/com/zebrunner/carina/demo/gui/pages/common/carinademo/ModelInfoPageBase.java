@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.zebrunner.carina.demo.gui.pages.common;
-
-import java.util.List;
+package com.zebrunner.carina.demo.gui.pages.common.carinademo;
 
 import org.openqa.selenium.WebDriver;
 
-import com.zebrunner.carina.demo.gui.components.NewsItem;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
-public abstract class NewsPageBase extends AbstractPage {
+public abstract class ModelInfoPageBase extends AbstractPage {
 
-    public NewsPageBase(WebDriver driver) {
+    public ModelInfoPageBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract List<NewsItem> searchNews(String searchInput);
+    public abstract String readDisplay();
+
+    public abstract String readCamera();
+
+    public abstract String readRam();
+
+    public abstract String readBattery();
 
 }

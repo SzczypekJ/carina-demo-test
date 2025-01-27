@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.carinademo;
 
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 
-import com.zebrunner.carina.demo.gui.components.compare.ModelSpecs;
+import com.zebrunner.carina.demo.gui.components.NewsItem;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
-public abstract class CompareModelsPageBase extends AbstractPage {
+public abstract class NewsPageBase extends AbstractPage {
 
-    public CompareModelsPageBase(WebDriver driver) {
+    public NewsPageBase(WebDriver driver) {
         super(driver);
-        this.setPageURL("/compare.php3");
     }
 
-    public abstract List<ModelSpecs> compareModels(String... models);
+    public abstract List<NewsItem> searchNews(String searchInput);
 
 }

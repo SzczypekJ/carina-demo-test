@@ -17,8 +17,8 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 
 import java.util.List;
 
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.ModelInfoPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.BrandModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.ModelInfoPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 

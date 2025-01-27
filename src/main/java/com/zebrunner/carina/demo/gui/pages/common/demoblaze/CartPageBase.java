@@ -1,25 +1,20 @@
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.CartItemComponent;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.CartItemComponentDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
-import java.time.Duration;
 import java.util.List;
 
 public abstract class CartPageBase extends AbstractPage {
 
     @FindBy(css = "#tbodyid > tr")
-    protected List<CartItemComponent> cartItems;
+    protected List<CartItemComponentDesktop> cartItems;
 
     @FindBy(xpath = "//button[@data-target='#orderModal']")
     protected ExtendedWebElement placeOrderButton;
@@ -30,19 +25,13 @@ public abstract class CartPageBase extends AbstractPage {
     @FindBy(id = "tbodyid")
     protected ExtendedWebElement cartTable;
 
-    @FindBy(xpath = "//nav")
-    protected NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    protected Footer footer;
-
     public CartPageBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract NavigationBar getNavigationBar();
+    public abstract NavigationBarBase getNavigationBar();
 
-    public abstract Footer getFooter();
+    public abstract FooterBase getFooter();
 
     public abstract List<String> getProductNamesInCart();
 
@@ -67,5 +56,5 @@ public abstract class CartPageBase extends AbstractPage {
 
     public abstract void waitForProductPricesInCart();
 
-    public abstract List<CartItemComponent> getCartItems();
+    public abstract List<CartItemComponentDesktop> getCartItems();
 }

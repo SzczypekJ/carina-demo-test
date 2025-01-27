@@ -1,31 +1,34 @@
-package com.zebrunner.carina.demo.gui.pages.demoblaze;
+package com.zebrunner.carina.demo.gui.pages.demoblaze.desktop;
 
-import com.zebrunner.carina.demo.gui.pages.common.LoginPageBase;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
-import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.demo.gui.pages.common.demoblaze.LoginPageBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.FooterDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.NavigationBarDesktop;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = LoginPageBase.class)
-public class LoginPage extends LoginPageBase {
+public class LoginPageDesktop extends LoginPageBase {
 
-    public LoginPage(WebDriver driver) {
+    @FindBy(xpath = "//nav")
+    private NavigationBarDesktop navigationBar;
+
+    @FindBy(id = "footc")
+    private FooterDesktop footer;
+
+    public LoginPageDesktop(WebDriver driver) {
         super(driver);
     }
 
     @Override
-    public NavigationBar getNavigationBar() {
+    public NavigationBarDesktop getNavigationBar() {
         return navigationBar;
     }
 
     @Override
-    public Footer getFooter() {
+    public FooterDesktop getFooter() {
         return footer;
     }
 

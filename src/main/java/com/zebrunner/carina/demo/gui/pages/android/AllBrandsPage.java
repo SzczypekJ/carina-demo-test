@@ -19,8 +19,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.AllBrandsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.BrandModelsPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;

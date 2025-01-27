@@ -1,53 +1,41 @@
-package com.zebrunner.carina.demo.gui.pages.demoblaze.components;
+package com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.CartItemComponentBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import lombok.Getter;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
 @Getter
-public class CartItemComponent extends AbstractUIObject {
+public class CartItemComponentDesktop extends CartItemComponentBase {
 
-    @FindBy(css = "td:nth-child(1) img")
-    private ExtendedWebElement productImage;
-
-    @FindBy(css = "td:nth-child(2)")
-    private ExtendedWebElement productName;
-
-    @FindBy(css = "td:nth-child(3)")
-    private ExtendedWebElement productPrice;
-
-    @FindBy(css = "td:nth-child(4) a")
-    private ExtendedWebElement deleteButton;
-
-    public CartItemComponent(WebDriver driver) {
-        super(driver);
-    }
-
-    public CartItemComponent(WebDriver driver, SearchContext searchContext) {
+    public CartItemComponentDesktop(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 
+    @Override
     public String getProductName() {
         return productName.getText();
     }
 
+    @Override
     public String getProductPrice() {
         return productPrice.getText();
     }
 
+    @Override
     public void clickDeleteButton() {
         Assert.assertTrue(deleteButton.isVisible(), "Delete button is not visible");
         deleteButton.click();
     }
 
+    @Override
     public ExtendedWebElement getProductNameElement() {
         return productName;
     }
 
+    @Override
     public ExtendedWebElement getProductPriceElement() {
         return productPrice;
     }

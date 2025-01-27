@@ -1,22 +1,19 @@
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.ProductComponentDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 public abstract class AllProductsPageBase extends AbstractPage {
 
     @FindBy(xpath = "//div[@class='card h-100']")
-    protected List<ProductComponent> productList;
+    protected List<ProductComponentDesktop> productList;
 
     @FindBy(css = "#sign-username")
     protected ExtendedWebElement signInUsername;
@@ -27,19 +24,14 @@ public abstract class AllProductsPageBase extends AbstractPage {
     @FindBy(xpath = "//button[@onclick='register()']")
     protected ExtendedWebElement registerButton;
 
-    @FindBy(xpath = "//nav")
-    protected NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    protected Footer footer;
 
     public AllProductsPageBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract NavigationBar getNavigationBar();
+    public abstract NavigationBarBase getNavigationBar();
 
-    public abstract Footer getFooter();
+    public abstract FooterBase getFooter();
 
     public abstract void selectProductByIndex(int index);
 
@@ -48,5 +40,5 @@ public abstract class AllProductsPageBase extends AbstractPage {
 
     public abstract void SignIn(String username, String password);
 
-    public abstract List<ProductComponent> getProductList();
+    public abstract List<ProductComponentDesktop> getProductList();
 }

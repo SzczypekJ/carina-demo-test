@@ -18,7 +18,7 @@ package com.zebrunner.carina.demo.gui.pages.ios;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import com.zebrunner.carina.demo.gui.pages.common.ModelInfoPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.ModelInfoPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 

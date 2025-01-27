@@ -1,12 +1,10 @@
-package com.zebrunner.carina.demo.gui.pages.demoblaze;
+package com.zebrunner.carina.demo.gui.pages.demoblaze.desktop;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllProductsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.LoginPageBase;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.ProductComponent;
+import com.zebrunner.carina.demo.gui.pages.common.demoblaze.AllProductsPageBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.FooterDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.NavigationBarDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.ProductComponentDesktop;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -17,19 +15,26 @@ import java.time.Duration;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = AllProductsPageBase.class)
-public class AllProductsPage extends AllProductsPageBase {
+@Getter
+public class AllProductsPageDesktop extends AllProductsPageBase {
 
-    public AllProductsPage(WebDriver driver) {
+    @FindBy(xpath = "//nav")
+    private NavigationBarDesktop navigationBar;
+
+    @FindBy(id = "footc")
+    private FooterDesktop footer;
+
+    public AllProductsPageDesktop(WebDriver driver) {
         super(driver);
     }
 
     @Override
-    public NavigationBar getNavigationBar() {
+    public NavigationBarDesktop getNavigationBar() {
         return navigationBar;
     }
 
     @Override
-    public Footer getFooter() {
+    public FooterDesktop getFooter() {
         return footer;
     }
 
@@ -58,7 +63,7 @@ public class AllProductsPage extends AllProductsPageBase {
 
 
         return productList.stream()
-                .map(ProductComponent::getProductName)
+                .map(ProductComponentDesktop::getProductName)
                 .toList();
     }
 
@@ -70,7 +75,7 @@ public class AllProductsPage extends AllProductsPageBase {
     }
 
     @Override
-    public List<ProductComponent> getProductList() {
+    public List<ProductComponentDesktop> getProductList() {
         return productList;
     }
 }

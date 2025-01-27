@@ -18,10 +18,10 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.AllBrandsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.BrandModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.CompareModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;

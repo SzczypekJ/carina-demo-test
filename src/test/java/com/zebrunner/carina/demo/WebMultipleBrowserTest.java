@@ -24,8 +24,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
-import com.zebrunner.carina.demo.gui.pages.common.NewsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.NewsPageBase;
 import com.zebrunner.carina.demo.gui.components.NewsItem;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;

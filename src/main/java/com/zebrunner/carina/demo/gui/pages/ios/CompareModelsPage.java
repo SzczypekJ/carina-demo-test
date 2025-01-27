@@ -24,7 +24,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.zebrunner.carina.demo.gui.components.compare.CandidateBlock;
 import com.zebrunner.carina.demo.gui.components.compare.ModelSpecs;
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.CompareModelsPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 

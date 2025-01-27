@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.carinademo;
+
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 
+import com.zebrunner.carina.demo.gui.components.ModelItem;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
-public abstract class AllBrandsPageBase extends AbstractPage {
+public abstract class BrandModelsPageBase extends AbstractPage {
 
-    public AllBrandsPageBase(WebDriver driver) {
+    public BrandModelsPageBase(WebDriver driver) {
         super(driver);
     }
 
-    public abstract BrandModelsPageBase selectBrand(String brandName);
+    public abstract ModelInfoPageBase selectModel(String modelName);
+
+    public abstract List<ModelItem> getModels();
 
 }

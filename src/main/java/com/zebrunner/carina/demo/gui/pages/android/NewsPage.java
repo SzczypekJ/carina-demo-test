@@ -21,7 +21,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.zebrunner.carina.demo.gui.components.NewsItem;
-import com.zebrunner.carina.demo.gui.pages.common.NewsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.NewsPageBase;
 import com.zebrunner.carina.webdriver.locator.Context;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;

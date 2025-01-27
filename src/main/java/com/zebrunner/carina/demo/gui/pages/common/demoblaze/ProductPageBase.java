@@ -1,7 +1,7 @@
-package com.zebrunner.carina.demo.gui.pages.common;
+package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
@@ -15,12 +15,6 @@ public abstract class ProductPageBase extends AbstractPage {
     @FindBy(xpath = "//a[@class='btn btn-success btn-lg']")
     protected ExtendedWebElement addToCartButton;
 
-    @FindBy(xpath = "//nav")
-    protected NavigationBar navigationBar;
-
-    @FindBy(id = "footc")
-    protected Footer footer;
-
     public ProductPageBase(WebDriver driver) {
         super(driver);
     }
@@ -31,7 +25,7 @@ public abstract class ProductPageBase extends AbstractPage {
 
     public abstract ExtendedWebElement getProductPriceElement();
 
-    public abstract NavigationBar getNavigationBar();
+    public abstract NavigationBarBase getNavigationBar();
 
-    public abstract Footer getFooter();
+    public abstract FooterBase getFooter();
 }

@@ -15,8 +15,8 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo.gui.pages.desktop;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.AllBrandsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.BrandModelsPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;

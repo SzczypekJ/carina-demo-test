@@ -17,7 +17,7 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 
 import java.util.List;
 
-import com.zebrunner.carina.demo.gui.pages.common.NewsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.NewsPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 

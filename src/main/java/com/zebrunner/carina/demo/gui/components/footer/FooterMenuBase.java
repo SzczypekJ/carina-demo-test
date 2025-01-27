@@ -15,8 +15,8 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo.gui.components.footer;
 
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
-import com.zebrunner.carina.demo.gui.pages.common.NewsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.NewsPageBase;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 

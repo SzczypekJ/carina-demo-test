@@ -24,8 +24,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.zebrunner.carina.demo.gui.components.footer.FooterMenuBase;
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.CompareModelsPageBase;
+import com.zebrunner.carina.demo.gui.pages.common.carinademo.HomePageBase;
 import com.zebrunner.carina.demo.gui.components.compare.ModelSpecs;
 import com.zebrunner.carina.demo.gui.components.compare.ModelSpecs.SpecType;
 import com.zebrunner.carina.core.IAbstractTest;

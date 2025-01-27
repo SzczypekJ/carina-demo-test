@@ -1,14 +1,11 @@
-package com.zebrunner.carina.demo.gui.pages.demoblaze;
+package com.zebrunner.carina.demo.gui.pages.demoblaze.desktop;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllProductsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.CartPageBase;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.CartItemComponent;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.Footer;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.NavigationBar;
+import com.zebrunner.carina.demo.gui.pages.common.demoblaze.CartPageBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.CartItemComponentDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.FooterDesktop;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.NavigationBarDesktop;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,21 +20,27 @@ import java.time.Duration;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = CartPageBase.class)
-public class CartPage extends CartPageBase {
+public class CartPageDesktop extends CartPageBase {
 
-    public static final Logger logger = LoggerFactory.getLogger(CartPage.class);
+    public static final Logger logger = LoggerFactory.getLogger(CartPageDesktop.class);
 
-    public CartPage(WebDriver driver) {
+    @FindBy(xpath = "//nav")
+    private NavigationBarDesktop navigationBar;
+
+    @FindBy(id = "footc")
+    private FooterDesktop footer;
+
+    public CartPageDesktop(WebDriver driver) {
         super(driver);
     }
 
     @Override
-    public NavigationBar getNavigationBar() {
+    public NavigationBarDesktop getNavigationBar() {
         return navigationBar;
     }
 
     @Override
-    public Footer getFooter() {
+    public FooterDesktop getFooter() {
         return footer;
     }
 
@@ -46,7 +49,7 @@ public class CartPage extends CartPageBase {
         waitForProductNamesInCart();
         Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product names found!");
         return cartItems.stream()
-                .map(CartItemComponent::getProductName)
+                .map(CartItemComponentDesktop::getProductName)
                 .toList();
     }
 
@@ -56,7 +59,7 @@ public class CartPage extends CartPageBase {
         // Don't work with to assert
         Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product name elements found!");
         return cartItems.stream()
-                .map(CartItemComponent::getProductNameElement)
+                .map(CartItemComponentDesktop::getProductNameElement)
                 .toList();
     }
 
@@ -65,7 +68,7 @@ public class CartPage extends CartPageBase {
         waitForProductPricesInCart();
         Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product prices found!");
         return cartItems.stream()
-                .map(CartItemComponent::getProductPrice)
+                .map(CartItemComponentDesktop::getProductPrice)
                 .map(rawPrice -> rawPrice.replaceAll("[^0-9]", ""))
                 .toList();
     }
@@ -75,7 +78,7 @@ public class CartPage extends CartPageBase {
         waitForProductPricesInCart();
         Assert.assertFalse(cartItems.isEmpty(), "Cart is empty, no product prices found!");
         return cartItems.stream()
-                .map(CartItemComponent::getProductPriceElement)
+                .map(CartItemComponentDesktop::getProductPriceElement)
                 .toList();
     }
 
@@ -108,7 +111,7 @@ public class CartPage extends CartPageBase {
     public void deleteAllItems() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        for (CartItemComponent item : cartItems) {
+        for (CartItemComponentDesktop item : cartItems) {
             item.clickDeleteButton();
             wait.until(ExpectedConditions.stalenessOf(item.getRootExtendedElement().getElement()));
         }
@@ -151,7 +154,7 @@ public class CartPage extends CartPageBase {
     }
 
     @Override
-    public List<CartItemComponent> getCartItems() {
+    public List<CartItemComponentDesktop> getCartItems() {
         return cartItems;
     }
 }
