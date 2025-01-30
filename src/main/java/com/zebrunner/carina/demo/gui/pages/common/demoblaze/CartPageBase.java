@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public abstract class CartPageBase extends AbstractPage {
+public abstract class CartPageBase extends MainPageBase {
 
     @FindBy(css = "#tbodyid > tr")
     protected List<CartItemComponentDesktop> cartItems;
@@ -29,9 +29,6 @@ public abstract class CartPageBase extends AbstractPage {
         super(driver);
     }
 
-    public abstract NavigationBarBase getNavigationBar();
-
-    public abstract FooterBase getFooter();
 
     public abstract List<String> getProductNamesInCart();
 
@@ -50,7 +47,6 @@ public abstract class CartPageBase extends AbstractPage {
     public abstract String getTotalPrice();
 
     public abstract void deleteAllItems();
-
 
     public abstract void waitForProductNamesInCart();
 

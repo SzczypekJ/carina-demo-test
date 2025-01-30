@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 
 @Getter
-public abstract class CheckoutPageBase extends AbstractPage {
+public abstract class CheckoutPageBase extends MainPageBase {
     @FindBy(xpath = "//input[@id='name']")
     protected ExtendedWebElement nameField;
 
@@ -42,10 +42,6 @@ public abstract class CheckoutPageBase extends AbstractPage {
     public CheckoutPageBase(WebDriver driver) {
         super(driver);
     }
-
-    public abstract NavigationBarBase getNavigationBar();
-
-    public abstract FooterBase getFooter();
 
     public abstract void fillCheckoutDetails(Person person);
 

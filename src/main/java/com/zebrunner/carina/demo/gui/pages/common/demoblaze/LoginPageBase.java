@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public abstract class LoginPageBase extends AbstractPage {
+public abstract class LoginPageBase extends MainPageBase {
 
     @FindBy(xpath = "//input[@id='loginusername']")
     protected ExtendedWebElement usernameField;
@@ -23,14 +23,9 @@ public abstract class LoginPageBase extends AbstractPage {
     @FindBy(xpath = "//button[@onclick='logIn()']")
     protected ExtendedWebElement submitButton;
 
-
     public LoginPageBase(WebDriver driver) {
         super(driver);
     }
-
-    public abstract NavigationBarBase getNavigationBar();
-
-    public abstract FooterBase getFooter();
 
     public abstract void login(String username, String password);
 

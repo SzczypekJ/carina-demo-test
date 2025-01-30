@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public abstract class AllProductsPageBase extends AbstractPage {
+public abstract class AllProductsPageBase extends MainPageBase {
 
     @FindBy(xpath = "//div[@class='card h-100']")
     protected List<ProductComponentDesktop> productList;
@@ -28,10 +28,6 @@ public abstract class AllProductsPageBase extends AbstractPage {
     public AllProductsPageBase(WebDriver driver) {
         super(driver);
     }
-
-    public abstract NavigationBarBase getNavigationBar();
-
-    public abstract FooterBase getFooter();
 
     public abstract void selectProductByIndex(int index);
 

@@ -2,7 +2,7 @@
 <suite name="ProductStoreTestSuite" verbose="1" parallel="methods" thread-count="7">
     <test name="ProductStoreTests">
         <classes>
-            <class name="com.zebrunner.carina.pageobjectpattern.ProductStoreTest"/>
+            <class name="com.zebrunner.carina.pageobjectpattern.PurchaseTest"/>
         </classes>
     </test>
 </suite>
