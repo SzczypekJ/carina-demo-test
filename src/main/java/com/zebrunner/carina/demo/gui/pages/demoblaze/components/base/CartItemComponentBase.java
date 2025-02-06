@@ -27,13 +27,24 @@ public abstract class CartItemComponentBase extends AbstractUIObject {
         super(driver, searchContext);
     }
 
-    public abstract String getProductName();
+    public String getProductName() {
+        return productName.getText();
+    }
 
-    public abstract String getProductPrice();
+    public String getProductPrice() {
+        return productPrice.getText();
+    }
 
-    public abstract void clickDeleteButton();
+    public void clickDeleteButton() {
+        Assert.assertTrue(deleteButton.isVisible(), "Delete button is not visible");
+        deleteButton.click();
+    }
 
-    public abstract ExtendedWebElement getProductNameElement();
+    public ExtendedWebElement getProductNameElement() {
+        return productName;
+    }
 
-    public abstract ExtendedWebElement getProductPriceElement();
+    public ExtendedWebElement getProductPriceElement() {
+        return productPrice;
+    }
 }

@@ -3,8 +3,7 @@ package com.zebrunner.carina.pageobjectpattern;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.gui.pages.common.demoblaze.CartPageBase;
 import com.zebrunner.carina.demo.gui.pages.common.demoblaze.ProductPageBase;
-import com.zebrunner.carina.demo.utils.TestingMethods;
-import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.CartItemComponentBase;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +23,8 @@ public class CartTest extends AbstractTest implements IAbstractTest {
         // Log in - the helpful method to log in - the reuse of code
         loginUser("username2");
 
-        TestingMethods testingMethods = new TestingMethods();
         // Adds product to the cart - helpful method which reduce amount of code
-        List<String> informations = testingMethods.addProductToCartByIndex(driver, 0);
+        List<String> informations = addProductToCartByIndex(driver, 0);
         Assert.assertNotNull(informations, "Product information should not be null!");
         Assert.assertFalse(informations.isEmpty(), "Product information should not be empty!");
 
@@ -38,7 +36,7 @@ public class CartTest extends AbstractTest implements IAbstractTest {
         ProductPageBase productPage = initPage(driver, ProductPageBase.class);
         productPage.getNavigationBar().goToCart();
 
-        CartPageBase cartPage = initPage(driver, CartPageBase.class);
+        CartPageBase<? extends CartItemComponentBase> cartPage = initPage(driver, CartPageBase.class);
 
         // Better approach if the website is dynamic
 //        new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -64,9 +62,9 @@ public class CartTest extends AbstractTest implements IAbstractTest {
                 .allMatch(element -> element.getElement().isDisplayed()), "The cart is not loaded properly!");
 
         // Check if everything in the Cart is okey
-        testingMethods.assertsInCart(driver, productName, price);
+        assertsInCart(driver, productName, price);
 
         // Delete the products from the cart
-        testingMethods.deleteProductsInTheCartAndCheckIt(driver);
+        deleteProductsInTheCartAndCheckIt(driver);
     }
 }

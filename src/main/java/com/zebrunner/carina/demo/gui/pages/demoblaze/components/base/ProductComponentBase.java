@@ -23,11 +23,18 @@ public abstract class ProductComponentBase extends AbstractUIObject {
     @FindBy(xpath = ".//a[@class='hrefch']")
     protected ExtendedWebElement productLink;
 
-    public abstract String getProductName();
+    public String getProductName() {
+        return productName.getText();
+    }
 
-    public abstract String getProductPrice();
+    public String getProductPrice() {
+        return productPrice.getText();
+    }
 
-    public abstract String getProductLink();
-
-    public abstract void clickOnProductLink();
+    public String getProductLink() {
+        return productLink.getText();
+    }
+    public void clickOnProductLink() {
+        productLink.click();
+    }
 }

@@ -3,8 +3,6 @@ package com.zebrunner.carina.demo.gui.pages.demoblaze.android;
 import com.zebrunner.carina.demo.gui.pages.common.demoblaze.ProductPageBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.android.FooterMobile;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.android.NavigationBarMobile;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.FooterDesktop;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.NavigationBarDesktop;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;

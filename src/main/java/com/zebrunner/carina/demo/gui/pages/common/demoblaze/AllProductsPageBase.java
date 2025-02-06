@@ -1,19 +1,20 @@
 package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.ProductComponentBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.ProductComponentDesktop;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
-import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
-public abstract class AllProductsPageBase extends MainPageBase {
+public abstract class AllProductsPageBase<T extends ProductComponentBase> extends MainPageBase {
 
     @FindBy(xpath = "//div[@class='card h-100']")
-    protected List<ProductComponentDesktop> productList;
+    protected List<T> productList;
 
     @FindBy(css = "#sign-username")
     protected ExtendedWebElement signInUsername;
@@ -29,12 +30,22 @@ public abstract class AllProductsPageBase extends MainPageBase {
         super(driver);
     }
 
-    public abstract void selectProductByIndex(int index);
+    public void selectProductByIndex(int index) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("Product is not visible in the list!")
+                .until(ExpectedConditions.visibilityOf(getProductList().get(index).getRootExtendedElement().getElement()));
+
+        getProductList().get(index).clickOnProductLink();
+    }
 
     public abstract List<String> getProductNames();
 
+    public void SignIn(String username, String password) {
+        signInUsername.type(username);
+        signInPassword.type(password);
+        registerButton.click();
+    }
 
-    public abstract void SignIn(String username, String password);
-
-    public abstract List<ProductComponentDesktop> getProductList();
+    public abstract List<T> getProductList();
 }

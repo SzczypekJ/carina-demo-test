@@ -35,18 +35,31 @@ public abstract class NavigationBarBase extends AbstractUIObject {
         super(driver, searchContext);
     }
 
+    public void goToHome() {
+        homeButton.click();
+    }
 
-    public abstract void goToHome();
+    public void goToContact() {
+        contactButton.click();
+    }
 
-    public abstract void goToContact();
+    public void goToAboutUs() {
+        aboutUsButton.click();
+    }
 
-    public abstract void goToAboutUs();
+    public void goToCart() {
+        cartButton.click();
+    }
 
-    public abstract void goToCart();
+    public void goToLogin() {
+        loginButton.click();
+    }
 
-    public abstract void goToLogin();
+    public void goToLogout() {
+        logoutButton.click();
+    }
 
-    public abstract void goToLogout();
-
-    public abstract void goToSignIn();
+    public void goToSignIn() {
+        signInButton.click();
+    }
 }

@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.gui.pages.common.demoblaze;
 
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.CartItemComponentBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.CartItemComponentDesktop;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.FooterBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.NavigationBarBase;
@@ -11,10 +12,10 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public abstract class CartPageBase extends MainPageBase {
+public abstract class CartPageBase<T extends CartItemComponentBase> extends MainPageBase {
 
     @FindBy(css = "#tbodyid > tr")
-    protected List<CartItemComponentDesktop> cartItems;
+    protected List<T> cartItems;
 
     @FindBy(xpath = "//button[@data-target='#orderModal']")
     protected ExtendedWebElement placeOrderButton;
@@ -52,5 +53,5 @@ public abstract class CartPageBase extends MainPageBase {
 
     public abstract void waitForProductPricesInCart();
 
-    public abstract List<CartItemComponentDesktop> getCartItems();
+    public abstract List<T> getCartItems();
 }

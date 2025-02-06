@@ -27,11 +27,21 @@ public abstract class LoginPageBase extends MainPageBase {
         super(driver);
     }
 
-    public abstract void login(String username, String password);
+    public void login(String username, String password) {
+        usernameField.type(username);
+        passwordField.type(password);
+        submitButton.click();
+    }
 
-    public abstract String getWelcomeText();
+    public String getWelcomeText() {
+        return welcomeText.getText();
+    }
 
-    public abstract WebElement getWelcomeTextElement();
+    public WebElement getWelcomeTextElement() {
+        return welcomeText;
+    }
 
-    public abstract ExtendedWebElement getUsernameField();
+    public ExtendedWebElement getUsernameField() {
+        return usernameField;
+    }
 }

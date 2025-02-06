@@ -1,6 +1,7 @@
 package com.zebrunner.carina.demo.gui.pages.demoblaze.desktop;
 
 import com.zebrunner.carina.demo.gui.pages.common.demoblaze.CartPageBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.android.CartItemComponentMobile;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.CartItemComponentDesktop;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.FooterDesktop;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.NavigationBarDesktop;
@@ -20,7 +21,7 @@ import java.time.Duration;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = CartPageBase.class)
-public class CartPageDesktop extends CartPageBase {
+public class CartPageDesktop extends CartPageBase<CartItemComponentDesktop> {
 
     public static final Logger logger = LoggerFactory.getLogger(CartPageDesktop.class);
 
@@ -29,6 +30,9 @@ public class CartPageDesktop extends CartPageBase {
 
     @FindBy(id = "footc")
     private FooterDesktop footer;
+
+    @FindBy(css = "#tbodyid > tr")
+    protected List<CartItemComponentDesktop> cartItems;
 
     public CartPageDesktop(WebDriver driver) {
         super(driver);
@@ -122,24 +126,29 @@ public class CartPageDesktop extends CartPageBase {
 
     @Override
     public void waitForProductNamesInCart() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.withMessage("Product names are not visible in the cart!")
-                .until(driver -> {
-                    if (cartItems.isEmpty()) {
-                        logger.info("Cart items list is empty!");
-                        return false;
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .withMessage("Product names are not visible in the cart!")
+                .until(driver1 -> {
+                    List<CartItemComponentDesktop> items = getCartItems();
+                    if (items == null || items.isEmpty()) {
+                        logger.info("Cart items list is empty! Waiting for them to load...");
+                        return null; // Kontynuuj oczekiwanie
                     }
-
-                    boolean allVisible = cartItems.stream()
-                            .map(item -> item.getProductNameElement().getElement())
-                            .allMatch(WebElement::isDisplayed);
-
-                    if (!allVisible) {
-                        logger.info("Not all product names are visible yet!");
+                    List<ExtendedWebElement> nameElements = cartItems.stream()
+                            .map(item -> {
+                                item.getProductNameElement().refresh();
+                                return item.getProductNameElement();
+                            })
+                            .toList();
+                    if (nameElements.isEmpty()) {
+                        logger.info("No product name elements found yet. Waiting...");
+                        return null;
                     }
-                    
-                    logger.info(String.valueOf(allVisible));
-                    return allVisible;
+                    boolean allVisible = nameElements.stream()
+                            .allMatch(element -> element.getElement().isDisplayed());
+                    logger.info("Are all product name elements displayed: " + allVisible);
+                    return allVisible ? true : null;
                 });
     }
 

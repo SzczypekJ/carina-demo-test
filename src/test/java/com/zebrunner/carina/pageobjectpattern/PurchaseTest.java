@@ -2,11 +2,10 @@ package com.zebrunner.carina.pageobjectpattern;
 
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.demo.gui.pages.common.demoblaze.*;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.CartItemComponentBase;
+import com.zebrunner.carina.demo.gui.pages.demoblaze.components.base.ProductComponentBase;
 import com.zebrunner.carina.demo.gui.pages.demoblaze.components.desktop.ProductComponentDesktop;
-import com.zebrunner.carina.demo.utils.TestingMethods;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -14,7 +13,6 @@ import org.testng.annotations.Test;
 import com.zebrunner.carina.utils.R;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,13 +29,13 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
         // Log in
         loginUser("username3");
 
-        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
-        TestingMethods testingMethods = new TestingMethods();
+        AllProductsPageBase<? extends ProductComponentBase> allProductsPage = initPage(driver, AllProductsPageBase.class);
+
         // Wait for loading the products on the page
-        testingMethods.waitForProductsOnMainPage(driver, allProductsPage);
+        waitForProductsOnMainPage(driver, allProductsPage);
 
         // Get the product list from the page
-        List<ProductComponentDesktop> productList = allProductsPage.getProductList();
+        List<? extends ProductComponentBase> productList = allProductsPage.getProductList();
 
         int size = productList.size();
 
@@ -46,21 +44,21 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
         int index = Integer.parseInt(R.CONFIG.get("index"));
 
         if (index < size) {
-            List<String> informations = testingMethods.addProductToCartByIndex(driver, 3);
+            List<String> informations = addProductToCartByIndex(driver, 3);
 
             String price = informations.get(1);
             ProductPageBase productPage = initPage(driver, ProductPageBase.class);
             productPage.getNavigationBar().goToCart();
 
-            CartPageBase cartPage = initPage(driver, CartPageBase.class);
+            CartPageBase<? extends CartItemComponentBase> cartPage = initPage(driver, CartPageBase.class);
             String totalPrice = cartPage.getTotalPrice();
             List<String> cartProductPrices = cartPage.getProductPricesInCart();
 
             // Validate total price
-            testingMethods.validateTotalPrice(cartPage, cartProductPrices, totalPrice);
+            validateTotalPrice(cartPage, cartProductPrices, totalPrice);
 
             // Buy products
-            testingMethods.PurchaseProduct(driver, price);
+            purchaseProduct(driver, price);
         } else {
             Assert.fail("Index is out of bounds: " + index + " for list of size: " + size + "!");
         }
@@ -74,10 +72,9 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
         // Log in
         loginUser("username4");
 
-        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
-        TestingMethods testingMethods = new TestingMethods();
+        AllProductsPageBase<? extends ProductComponentBase> allProductsPage = initPage(driver, AllProductsPageBase.class);
         // Wait for loading the products on the page
-        testingMethods.waitForProductsOnMainPage(driver, allProductsPage);
+        waitForProductsOnMainPage(driver, allProductsPage);
 
         List<String> allNamesOfProducts  = allProductsPage.getProductNames();
 
@@ -87,7 +84,7 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
                 .map(Integer::parseInt)
                 .toList();
 
-        Pair<List<String>, List<String>> result = testingMethods.addMultipleProductsToCart(driver, indexes, allProductsPage, size);
+        Pair<List<String>, List<String>> result = addMultipleProductsToCart(driver, indexes, allProductsPage, size);
 
         List<String> selectedProductNames = result.getLeft();
         List<String> selectedProductPrices = result.getRight();
@@ -96,24 +93,24 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
 
         allProductsPage.getNavigationBar().goToCart();
 
-        CartPageBase cartPage = initPage(driver, CartPageBase.class);
+        CartPageBase<? extends CartItemComponentBase> cartPage = initPage(driver, CartPageBase.class);
 
         // Waits for load product names and prices on the cart page
-        testingMethods.waitForProductsOnCartPage(driver, cartPage);
+        waitForProductsOnCartPage(driver, cartPage);
 
         List<String> cartProductNames = cartPage.getProductNamesInCart();
         List<String> cartProductPrices = cartPage.getProductPricesInCart();
 
         // Sort and validate the Cart content
-        testingMethods.validateCartContents(cartPage, selectedProductNames, cartProductNames, selectedProductPrices, cartProductPrices);
+        validateCartContents(cartPage, selectedProductNames, cartProductNames, selectedProductPrices, cartProductPrices);
 
         String totalPrice = cartPage.getTotalPrice();
 
         // Validate total price
-        testingMethods.validateTotalPrice(cartPage, cartProductPrices, totalPrice);
+        validateTotalPrice(cartPage, cartProductPrices, totalPrice);
 
         // Buy products
-        testingMethods.PurchaseProduct(driver, totalPrice);
+        purchaseProduct(driver, totalPrice);
     }
 
     @Test
@@ -121,13 +118,12 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
         WebDriver driver = getDriver();
 
         // Log in
-        loginUser("username4");
+        loginUser("username5");
 
-        AllProductsPageBase allProductsPage = initPage(driver, AllProductsPageBase.class);
-        TestingMethods testingMethods = new TestingMethods();
+        AllProductsPageBase<? extends ProductComponentBase> allProductsPage = initPage(driver, AllProductsPageBase.class);
 
         // Wait for loading the products on the page
-        testingMethods.waitForProductsOnMainPage(driver, allProductsPage);
+        waitForProductsOnMainPage(driver, allProductsPage);
 
         List<String> allNamesOfProducts  = allProductsPage.getProductNames();
 
@@ -136,7 +132,7 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
         List<String> selectedProductPrices = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
-            List<String> informations = testingMethods.addProductToCartByIndex(driver, i);
+            List<String> informations = addProductToCartByIndex(driver, i);
 
             selectedProductNames.add(allNamesOfProducts.get(i));
             selectedProductPrices.add(informations.get(1));
@@ -146,24 +142,24 @@ public class PurchaseTest extends AbstractTest implements IAbstractTest {
 
         allProductsPage.getNavigationBar().goToCart();
 
-        CartPageBase cartPage = initPage(driver, CartPageBase.class);
+        CartPageBase<? extends CartItemComponentBase> cartPage = initPage(driver, CartPageBase.class);
 
         // Waits for load product names and prices on the cart page
-        testingMethods.waitForProductsOnCartPage(driver, cartPage);
+        waitForProductsOnCartPage(driver, cartPage);
 
         List<String> cartProductNames = cartPage.getProductNamesInCart();
         List<String> cartProductPrices = cartPage.getProductPricesInCart();
 
         // Sort and validate the Cart content
-        testingMethods.validateCartContents(cartPage, selectedProductNames, cartProductNames, selectedProductPrices, cartProductPrices);
+        validateCartContents(cartPage, selectedProductNames, cartProductNames, selectedProductPrices, cartProductPrices);
 
         String totalPrice = cartPage.getTotalPrice();
 
         // Validate total price
-        testingMethods.validateTotalPrice(cartPage, cartProductPrices, totalPrice);
+        validateTotalPrice(cartPage, cartProductPrices, totalPrice);
 
         // Buy products
-        testingMethods.PurchaseProduct(driver, totalPrice);
+        purchaseProduct(driver, totalPrice);
     }
 
 }

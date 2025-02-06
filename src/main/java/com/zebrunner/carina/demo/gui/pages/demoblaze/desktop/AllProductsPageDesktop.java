@@ -16,13 +16,16 @@ import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = AllProductsPageBase.class)
 @Getter
-public class AllProductsPageDesktop extends AllProductsPageBase {
+public class AllProductsPageDesktop extends AllProductsPageBase<ProductComponentDesktop> {
 
     @FindBy(xpath = "//nav")
     private NavigationBarDesktop navigationBar;
 
     @FindBy(id = "footc")
     private FooterDesktop footer;
+
+    @FindBy(xpath = "//div[@class='card h-100']")
+    private List<ProductComponentDesktop> productList;
 
     public AllProductsPageDesktop(WebDriver driver) {
         super(driver);
@@ -36,17 +39,6 @@ public class AllProductsPageDesktop extends AllProductsPageBase {
     @Override
     public FooterDesktop getFooter() {
         return footer;
-    }
-
-    @Override
-    public void selectProductByIndex(int index) {
-
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .pollingEvery(Duration.ofMillis(500))
-                .withMessage("Product is not visible in the list!")
-                .until(ExpectedConditions.visibilityOf(productList.get(index).getRootExtendedElement().getElement()));
-
-        productList.get(index).clickOnProductLink();
     }
 
     @Override
@@ -65,13 +57,6 @@ public class AllProductsPageDesktop extends AllProductsPageBase {
         return productList.stream()
                 .map(ProductComponentDesktop::getProductName)
                 .toList();
-    }
-
-    @Override
-    public void SignIn(String username, String password) {
-        signInUsername.type(username);
-        signInPassword.type(password);
-        registerButton.click();
     }
 
     @Override

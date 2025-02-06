@@ -31,26 +31,4 @@ public class LoginPageDesktop extends LoginPageBase {
     public FooterDesktop getFooter() {
         return footer;
     }
-
-    @Override
-    public void login(String username, String password) {
-        usernameField.type(username);
-        passwordField.type(password);
-        submitButton.click();
-    }
-
-    @Override
-    public String getWelcomeText() {
-        return welcomeText.getText();
-    }
-
-    @Override
-    public WebElement getWelcomeTextElement() {
-        return welcomeText;
-    }
-
-    @Override
-    public ExtendedWebElement getUsernameField() {
-        return usernameField;
-    }
 }

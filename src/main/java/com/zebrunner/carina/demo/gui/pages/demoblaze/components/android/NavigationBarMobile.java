@@ -11,39 +11,4 @@ public class NavigationBarMobile extends NavigationBarBase {
     public NavigationBarMobile(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
-
-    @Override
-    public void goToHome() {
-        homeButton.click();
-    }
-
-    @Override
-    public void goToContact() {
-        contactButton.click();
-    }
-
-    @Override
-    public void goToAboutUs() {
-        aboutUsButton.click();
-    }
-
-    @Override
-    public void goToCart() {
-        cartButton.click();
-    }
-
-    @Override
-    public void goToLogin() {
-        loginButton.click();
-    }
-
-    @Override
-    public void goToLogout() {
-        logoutButton.click();
-    }
-
-    @Override
-    public void goToSignIn() {
-        signInButton.click();
-    }
 }

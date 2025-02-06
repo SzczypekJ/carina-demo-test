@@ -13,30 +13,4 @@ public class CartItemComponentMobile extends CartItemComponentBase {
     public CartItemComponentMobile(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
-
-    @Override
-    public String getProductName() {
-        return productName.getText();
-    }
-
-    @Override
-    public String getProductPrice() {
-        return productPrice.getText();
-    }
-
-    @Override
-    public void clickDeleteButton() {
-        Assert.assertTrue(deleteButton.isVisible(), "Delete button is not visible");
-        deleteButton.click();
-    }
-
-    @Override
-    public ExtendedWebElement getProductNameElement() {
-        return productName;
-    }
-
-    @Override
-    public ExtendedWebElement getProductPriceElement() {
-        return productPrice;
-    }
 }

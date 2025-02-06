@@ -34,17 +34,31 @@ public abstract class FooterBase extends AbstractUIObject {
     @FindBy(css = "#fotcont > div:nth-child(3) > div > div > h4")
     protected ExtendedWebElement productStoreTitle;
 
-    public abstract String getAboutUsTitle();
+    public String getAboutUsTitle() {
+        return aboutUsTitle.getText();
+    }
 
-    public abstract String getAboutUsDescription();
+    public String getAboutUsDescription() {
+        return aboutUsDescription.getText();
+    }
 
-    public abstract String getGetInTouchTitle();
+    public String getGetInTouchTitle() {
+        return getInTouchTitle.getText();
+    }
 
-    public abstract String getAddress();
+    public String getAddress() {
+        return address.getText();
+    }
 
-    public abstract String getPhone();
+    public String getPhone() {
+        return phone.getText();
+    }
 
-    public abstract String getEmail();
+    public String getEmail() {
+        return email.getText();
+    }
 
-    public abstract String getProductStoreTitle();
+    public String getProductStoreTitle() {
+        return productStoreTitle.getText();
+    }
 }
